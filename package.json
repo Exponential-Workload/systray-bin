@@ -1,24 +1,45 @@
 {
   "name": "systray-bin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Downloads & exposes systray binaries for Linux, Mac & Windows",
-  "main": "index.js",
-  "types": "./types.d.ts",
-  "scripts": {
-    "install": "node ./install.js"
-  },
   "keywords": [],
-  "author": "Expo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Exponential-Workload/systray-bin.git"
+  },
   "license": "MIT",
-  "devDependencies": {
-    "@types/fs-extra": "^11.0.1",
-    "@types/node": "^20.2.3"
+  "author": "Expo",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "./types.d.ts",
+  "typings": "./types.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "types.d.ts",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && cp -r src dist && esbuild src/* --outdir=dist --minify --format=cjs --platform=node --bundle --packages=external && node postbuild.mjs",
+    "install": "node ./dist/install.js",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "fs-extra": "^11.1.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Exponential-Workload/systray-bin.git"
+  "devDependencies": {
+    "@3xpo/pkgmetatool": "^0.1.6",
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^20.2.3"
   }
 }
